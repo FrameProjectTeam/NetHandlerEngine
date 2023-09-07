@@ -4,7 +4,40 @@ using System.Runtime.CompilerServices;
 
 namespace HandlerEngine
 {
-	public sealed class NetworkBufferWriter : IBufferWriter<byte>, IDisposable
+	public interface INetworkBuffer : IBufferWriter<byte>
+	{
+		int WrittenLength { get; }
+		bool IsEmpty { get; }
+
+		ReadOnlySpan<byte> WrittenSpan
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			get;
+		}
+
+		ReadOnlyMemory<byte> WrittenMemory
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			get;
+		}
+
+		ArraySegment<byte> RawWrittenSegment
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			get;
+		}
+
+		int FreeCapacity
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			get;
+		}
+
+		void Reset(bool clear = false);
+		void EnsureCapacity(int appendLength);
+	}
+	
+	public sealed class NetworkBufferWriter : INetworkBuffer, IDisposable
 	{
 		internal const int MinLen = 16;
 		internal const int MaxLen = ushort.MaxValue;

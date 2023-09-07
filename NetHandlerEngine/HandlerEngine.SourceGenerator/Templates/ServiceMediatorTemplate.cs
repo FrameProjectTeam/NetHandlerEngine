@@ -17,7 +17,7 @@ namespace HandlerEngine.SourceGenerator.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+    #line 1 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
     public partial class ServiceMediatorTemplate : ServiceMediatorTemplateBase
     {
@@ -29,7 +29,7 @@ namespace HandlerEngine.SourceGenerator.Templates
         {
             this.Write("using System;\r\nusing System.Buffers.Binary;\r\nusing System.Collections.Generic;\r\nusing System.Threading.Tasks;\r\n\r\nusing HandlerEngine;\r\nusing HandlerEngine.Interfaces;\r\nusing HandlerEngine.Serialization;\r\n\r\n");
             
-            #line 13 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 13 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
     if(Info.HasNamespace)
     {
@@ -39,14 +39,14 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("namespace ");
             
-            #line 17 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 17 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Info.Namespace));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n");
             
-            #line 19 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 19 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
         PushIndent("\t");
     }
@@ -56,35 +56,35 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("public abstract class ");
             
-            #line 23 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 23 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Info.ServiceName));
             
             #line default
             #line hidden
             this.Write("Mediator : I");
             
-            #line 23 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 23 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Info.ServiceName));
             
             #line default
             #line hidden
             this.Write(", INetworkService\r\n{\r\n    public string ServiceName => \"");
             
-            #line 25 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 25 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Info.ServiceName));
             
             #line default
             #line hidden
             this.Write("\";\r\n    public byte ServiceId { get; private set; }\r\n    public INetRecipient Recipient { get; private set; }\r\n\r\n    public bool IsDisposed { get; private set; }\r\n\r\n    private readonly RequestResponseDelegateAsync[] _requestAsyncHandlers;\r\n    private readonly HandlerDelegateAsync[] _rpcAsyncHandlers;\r\n\r\n    protected ");
             
-            #line 34 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 34 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Info.ServiceName));
             
             #line default
             #line hidden
             this.Write("Mediator()\r\n    { \r\n");
             
-            #line 36 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 36 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
     MethodInfo[] requestMethods = Info.MethodInfos.Where(mi => !mi.IsRpc()).ToArray();
 
@@ -96,7 +96,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        _requestAsyncHandlers = Array.Empty<RequestResponseDelegateAsync>();\r\n        \r\n");
             
-            #line 44 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 44 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
     }
     else
@@ -107,7 +107,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        _requestAsyncHandlers = new RequestResponseDelegateAsync[]\r\n        {\r\n");
             
-            #line 51 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 51 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
         foreach(MethodInfo mi in requestMethods)
         {
@@ -117,21 +117,21 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("            ");
             
-            #line 55 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 55 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.Name));
             
             #line default
             #line hidden
             this.Write("_0x");
             
-            #line 55 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 55 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.CallAttributeInfo.CallId.ToString("X2")));
             
             #line default
             #line hidden
             this.Write(",\r\n");
             
-            #line 56 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 56 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
         }
 
@@ -140,7 +140,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        };\r\n");
             
-            #line 60 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 60 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
     }
     
@@ -153,7 +153,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("\r\n        _rpcAsyncHandlers = Array.Empty<HandlerDelegateAsync>();\r\n");
             
-            #line 69 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 69 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
     }
     else
@@ -164,7 +164,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("\r\n        _rpcAsyncHandlers = new HandlerDelegateAsync[]\r\n        {\r\n");
             
-            #line 77 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 77 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
         foreach(MethodInfo mi in rpcMethods)
         {
@@ -174,21 +174,21 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("            ");
             
-            #line 81 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 81 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.Name));
             
             #line default
             #line hidden
             this.Write("_0x");
             
-            #line 81 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 81 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.CallAttributeInfo.CallId.ToString("X2")));
             
             #line default
             #line hidden
             this.Write(",\r\n");
             
-            #line 82 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 82 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
         }
 
@@ -197,7 +197,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        };\r\n");
             
-            #line 86 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 86 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
     }
 
@@ -206,7 +206,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("    }\r\n\r\n    void IServiceUnit.Bind(INetRecipient recipient, byte serviceId)\r\n    {\r\n        ServiceId = serviceId;\r\n        Recipient = recipient;\r\n        OnInitialize();\r\n    }\r\n    \r\n    protected virtual void OnInitialize() { }\r\n\r\n    public void Dispose()\r\n    {\r\n        Dispose(true);\r\n        GC.SuppressFinalize(this);\r\n    }\r\n\r\n    protected virtual void Dispose(bool disposing)\r\n    {\r\n        if(IsDisposed)\r\n        {\r\n            return;\r\n        }\r\n\r\n        if(disposing)\r\n        {\r\n            OnDispose();\r\n        }\r\n        OnDisposeUnmanaged();\r\n        IsDisposed = true;\r\n    }\r\n\r\n    protected virtual void OnDispose() { }\r\n\r\n    protected virtual void OnDisposeUnmanaged() { }\r\n\r\n    IEnumerable<ServiceActionDescription> IReceiverServiceUnit.Actions()\r\n    {\r\n");
             
-            #line 127 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 127 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
     if(Info.MethodInfos.Length == 0)
     {
@@ -216,7 +216,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        yield break;\r\n");
             
-            #line 132 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 132 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
     }
     else
@@ -232,28 +232,28 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        yield return new ServiceActionDescription(0x");
             
-            #line 142 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 142 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(action.CallAttributeInfo.CallId.ToString("X2")));
             
             #line default
             #line hidden
             this.Write(", ");
             
-            #line 142 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 142 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(action.IsRpc() ? rpcIdx++ : requestIdx++));
             
             #line default
             #line hidden
             this.Write(", ");
             
-            #line 142 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 142 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(!action.IsRpc() ? "true" : "false"));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 143 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 143 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
         }
     }
@@ -263,7 +263,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("    }\r\n\r\n    public Task HandleRpcAsync(byte actionIdx, OperationCode operationCode, ref ReadOnlySpan<byte> data)\r\n    {\r\n        return _rpcAsyncHandlers[actionIdx].Invoke(operationCode, ref data);\r\n    }\r\n\r\n    public Task HandleRequestAsync(byte actionIdx, OperationCode operationCode, short requestNumber, ref ReadOnlySpan<byte> data)\r\n    {\r\n        return _requestAsyncHandlers[actionIdx].Invoke(operationCode, requestNumber, ref data);\r\n    }\r\n\r\n");
             
-            #line 159 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 159 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
     for(var i = 0; i < Info.MethodInfos.Length; ++i)
     {
@@ -282,28 +282,28 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("    private Task ");
             
-            #line 172 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 172 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.Name));
             
             #line default
             #line hidden
             this.Write("_0x");
             
-            #line 172 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 172 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.CallAttributeInfo.CallId.ToString("X2")));
             
             #line default
             #line hidden
             this.Write("(OperationCode __opCode, ");
             
-            #line 172 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 172 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(isRpc ? string.Empty : "short __requestNumber, "));
             
             #line default
             #line hidden
             this.Write("ref ReadOnlySpan<byte> __data)\r\n    {\r\n");
             
-            #line 174 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 174 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
         foreach(MethodArgumentInfo mai in mi.Parameters)
         {
@@ -315,21 +315,21 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        ");
             
-            #line 180 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 180 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mai.Type));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 180 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 180 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mai.Name));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 181 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 181 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
             }
             else
@@ -340,21 +340,21 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        var ");
             
-            #line 186 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 186 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mai.Name));
             
             #line default
             #line hidden
             this.Write(" = HandlerEngineSerializer.Deserializer.Read<");
             
-            #line 186 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 186 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mai.Type));
             
             #line default
             #line hidden
             this.Write(">(ref __data);\r\n");
             
-            #line 187 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 187 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
             }
         }
@@ -367,21 +367,21 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        var __result = ");
             
-            #line 194 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 194 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.Name));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 194 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 194 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.Parameters.Inline(true, false)));
             
             #line default
             #line hidden
             this.Write(");     \r\n");
             
-            #line 195 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 195 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
         }
         else
@@ -392,27 +392,27 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        ");
             
-            #line 200 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 200 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(isTask ? "var __task = " : string.Empty));
             
             #line default
             #line hidden
             
-            #line 200 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 200 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.Name));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 200 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 200 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.Parameters.Inline(true, false)));
             
             #line default
             #line hidden
             this.Write(");  \r\n");
             
-            #line 201 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 201 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
         }
 
@@ -424,14 +424,14 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        return ");
             
-            #line 207 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 207 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.IsTask ? "__task" : "Task.CompletedTask"));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 208 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 208 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
         }
         else
@@ -444,7 +444,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        return __task.ContinueWith(__completedTask => \r\n        {\r\n");
             
-            #line 217 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 217 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
                 PushIndent("\t");
             }
@@ -454,7 +454,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        NetworkBufferWriter __buffer = WriterBufferPool.Buffer;\r\n                \r\n        BinaryPrimitives.WriteUInt16LittleEndian(__buffer.GetSpan(sizeof(ushort)), __opCode.OpCode);\r\n\t\t__buffer.Advance(sizeof(ushort));\r\n        var __responseNumber = (short)(~__requestNumber + 1);\r\n        BinaryPrimitives.WriteInt16LittleEndian(__buffer.GetSpan(sizeof(short)), __responseNumber);\r\n\t\t__buffer.Advance(sizeof(short));\r\n\r\n");
             
-            #line 229 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 229 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
             if(!isVoid)
             {
@@ -464,14 +464,14 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        HandlerEngineSerializer.Serializer.Write(ref __buffer, ");
             
-            #line 233 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 233 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(isTask ? "__completedTask.Result" : "__result"));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 234 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 234 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
             }
 
@@ -485,14 +485,14 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        HandlerEngineSerializer.Serializer.Write(ref __buffer, ");
             
-            #line 242 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 242 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mai.Name));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 243 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 243 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
                 }
             }
@@ -500,23 +500,23 @@ namespace HandlerEngine.SourceGenerator.Templates
             
             #line default
             #line hidden
-            this.Write("        var __writtenSpan = __buffer.WrittenSpan;\r\n        Recipient!.Send(ref __writtenSpan, ");
+            this.Write("        Recipient!.Send(__buffer, ");
             
-            #line 248 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 247 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.CallAttributeInfo.ChannelType.InlineChanelType()));
             
             #line default
             #line hidden
             this.Write(",  ");
             
-            #line 248 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 247 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.CallAttributeInfo.ChannelId.ToString()));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 249 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 248 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
             if(isTask)
             {
@@ -527,7 +527,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        });\r\n");
             
-            #line 255 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 254 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
             }
             else
@@ -538,7 +538,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        return Task.CompletedTask;\r\n");
             
-            #line 261 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 260 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
             }
         }
@@ -548,7 +548,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("    }\r\n\r\n");
             
-            #line 267 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 266 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
         if(!isVoid && !isTask)
         {
@@ -558,28 +558,28 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("    public abstract ");
             
-            #line 271 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 270 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.ReturnType));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 271 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 270 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.Name));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 271 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 270 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.Parameters.Inline(true)));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 272 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 271 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
         }
         else
@@ -590,34 +590,34 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("    public abstract ");
             
-            #line 277 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 276 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.IsTask ? "Task" : "void"));
             
             #line default
             #line hidden
             
-            #line 277 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 276 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(isVoid ? string.Empty : $"<{mi.ReturnType}>"));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 277 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 276 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.Name));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 277 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 276 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.Parameters.Inline(true)));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 278 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 277 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
         }
     }
@@ -627,7 +627,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("}\r\n");
             
-            #line 283 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 282 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
     if(Info.HasNamespace)
     {
@@ -638,7 +638,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("}\r\n");
             
-            #line 289 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
+            #line 288 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceMediatorTemplate.tt"
 
     }
 

@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace HandlerEngine.Interfaces
+﻿namespace HandlerEngine.Interfaces
 {
 	public interface INetRecipient
 	{
-		void Send(ref ReadOnlySpan<byte> data, ChannelType channelType, byte channelId);
+		void Send(INetworkBuffer buffer, ChannelType channelType, byte channelId);
 	}
 }

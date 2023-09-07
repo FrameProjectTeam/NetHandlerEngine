@@ -88,11 +88,11 @@ namespace HandlerEngine
 
 #region INetRecipient Implementation
 
-		public void Send(ref ReadOnlySpan<byte> data, ChannelType channelType, byte channelId)
+		public void Send(INetworkBuffer buffer, ChannelType channelType, byte channelId)
 		{
 			for(var i = 0; i < _count; i++)
 			{
-				_recipients[i].Send(ref data, channelType, channelId);
+				_recipients[i].Send(buffer, channelType, channelId);
 			}
 		}
 

@@ -71,10 +71,10 @@ public static class Program
 			_netPeer = netPeer;
 		}
 
-		void INetRecipient.Send(ref ReadOnlySpan<byte> data, ChannelType channelType, byte channelId)
+		void INetRecipient.Send(INetworkBuffer buffer, ChannelType channelType, byte channelId)
 		{
 			var deliveryMethod = (DeliveryMethod)channelType;
-			_netPeer.Send(data, channelId, deliveryMethod);
+			_netPeer.Send(buffer.WrittenSpan, channelId, deliveryMethod);
 		}
 	}
 	

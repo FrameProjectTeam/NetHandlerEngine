@@ -16,7 +16,7 @@ namespace HandlerEngine.SourceGenerator.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
+    #line 1 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
     public partial class ServiceRpcClientTemplate : ServiceRpcClientTemplateBase
     {
@@ -28,7 +28,7 @@ namespace HandlerEngine.SourceGenerator.Templates
         {
             this.Write("using System;\r\nusing System.Buffers.Binary;\r\nusing System.Collections.Generic;\r\nusing System.Threading.Tasks;\r\n\r\nusing HandlerEngine;\r\nusing HandlerEngine.Interfaces;\r\nusing HandlerEngine.Serialization;\r\n\r\n");
             
-            #line 12 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
+            #line 12 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
 
     if(Info.HasNamespace)
     {
@@ -38,14 +38,14 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("namespace ");
             
-            #line 16 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
+            #line 16 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Info.Namespace));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n");
             
-            #line 18 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
+            #line 18 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
 
         PushIndent("\t");
     }
@@ -55,28 +55,28 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("public abstract class ");
             
-            #line 22 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
+            #line 22 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Info.ServiceName));
             
             #line default
             #line hidden
             this.Write("RpcClient : I");
             
-            #line 22 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
+            #line 22 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Info.ServiceName));
             
             #line default
             #line hidden
             this.Write("RpcClient\r\n{\r\n    public string ServiceName => \"");
             
-            #line 24 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
+            #line 24 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Info.ServiceName));
             
             #line default
             #line hidden
             this.Write("\";\r\n    public byte ServiceId { get; private set; }\r\n    public INetRecipient Recipient { get; private set; }\r\n\r\n    void IServiceUnit.Bind(INetRecipient recipient, byte serviceId)\r\n    {\r\n        Recipient = recipient;\r\n        ServiceId = serviceId;\r\n    }\r\n\r\n");
             
-            #line 34 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
+            #line 34 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
 
     var count = 0;
     foreach(MethodInfo mi in Info.MethodInfos)
@@ -96,35 +96,35 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("    public ");
             
-            #line 48 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
+            #line 48 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.ReturnType));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 48 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
+            #line 48 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.Name));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 48 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
+            #line 48 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.Parameters.Inline(true)));
             
             #line default
             #line hidden
             this.Write(")\r\n    {\r\n        var __opCode = new OperationCode(ServiceId, 0x");
             
-            #line 50 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
+            #line 50 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.CallAttributeInfo.CallId.ToString("X2")));
             
             #line default
             #line hidden
             this.Write(");\r\n        NetworkBufferWriter __buffer = WriterBufferPool.Buffer;\r\n        \r\n        BinaryPrimitives.WriteUInt16LittleEndian(__buffer.GetSpan(sizeof(ushort)), __opCode.OpCode);\r\n\t\t__buffer.Advance(sizeof(ushort));\r\n\r\n");
             
-            #line 56 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
+            #line 56 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
 
         foreach(MethodArgumentInfo pi in mi.Parameters)
         {
@@ -134,37 +134,37 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        HandlerEngineSerializer.Serializer.Write(ref __buffer, ");
             
-            #line 60 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
+            #line 60 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(pi.Name));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 61 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
+            #line 61 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
 
         }
 
             
             #line default
             #line hidden
-            this.Write("        var __writtenSpan = __buffer.WrittenSpan;\r\n        Recipient!.Send(ref __writtenSpan, ");
+            this.Write("        Recipient!.Send(__buffer, ");
             
-            #line 65 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
+            #line 64 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.CallAttributeInfo.ChannelType.InlineChanelType()));
             
             #line default
             #line hidden
             this.Write(",  ");
             
-            #line 65 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
+            #line 64 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.CallAttributeInfo.ChannelId.ToString()));
             
             #line default
             #line hidden
             this.Write(");\r\n    }\r\n");
             
-            #line 67 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
+            #line 66 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
 
     }
 
@@ -173,21 +173,21 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("}\r\n\r\npublic sealed class ");
             
-            #line 72 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
+            #line 71 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Info.ServiceName));
             
             #line default
             #line hidden
             this.Write("BroadcastClient : ");
             
-            #line 72 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
+            #line 71 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Info.ServiceName));
             
             #line default
             #line hidden
             this.Write("RpcClient, IBroadcastServiceClient\r\n{ }\r\n");
             
-            #line 74 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
+            #line 73 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
 
     if(Info.HasNamespace)
     {
@@ -198,7 +198,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("}\r\n");
             
-            #line 80 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
+            #line 79 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceRpcClientTemplate.tt"
 
     }
 

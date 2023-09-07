@@ -61,8 +61,7 @@ public abstract class <#= Info.ServiceName #>RpcClient : I<#= Info.ServiceName #
 <#
         }
 #>
-        var __writtenSpan = __buffer.WrittenSpan;
-        Recipient!.Send(ref __writtenSpan, <#= mi.CallAttributeInfo.ChannelType.InlineChanelType() #>,  <#= mi.CallAttributeInfo.ChannelId.ToString() #>);
+        Recipient!.Send(__buffer, <#= mi.CallAttributeInfo.ChannelType.InlineChanelType() #>,  <#= mi.CallAttributeInfo.ChannelId.ToString() #>);
     }
 <#
     }

@@ -16,7 +16,7 @@ namespace HandlerEngine.SourceGenerator.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+    #line 1 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
     public partial class ServiceClientTemplate : ServiceClientTemplateBase
     {
@@ -28,7 +28,7 @@ namespace HandlerEngine.SourceGenerator.Templates
         {
             this.Write("using System;\r\nusing System.Buffers.Binary;\r\nusing System.Collections.Generic;\r\nusing System.Collections.Concurrent;\r\nusing System.Threading;\r\nusing System.Threading.Tasks;\r\n\r\nusing HandlerEngine;\r\nusing HandlerEngine.Interfaces;\r\nusing HandlerEngine.Serialization;\r\n\r\n");
             
-            #line 14 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 14 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
 
     if(Info.HasNamespace)
     {
@@ -38,14 +38,14 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("namespace ");
             
-            #line 18 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 18 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Info.Namespace));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n");
             
-            #line 20 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 20 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
 
         PushIndent("\t");
     }
@@ -57,28 +57,28 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("public sealed class ");
             
-            #line 26 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 26 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Info.ServiceName));
             
             #line default
             #line hidden
             this.Write("Client : ");
             
-            #line 26 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 26 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(hasRpc ? $"{Info.ServiceName}RpcClient, " : string.Empty));
             
             #line default
             #line hidden
             this.Write("I");
             
-            #line 26 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 26 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Info.ServiceName));
             
             #line default
             #line hidden
             this.Write("Client\r\n{\r\n    private readonly RequestResponseDelegate[] _handlers;\r\n\r\n");
             
-            #line 30 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 30 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
 
     if(!hasRpc)
     {
@@ -88,14 +88,14 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("    public string ServiceName => \"");
             
-            #line 34 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 34 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Info.ServiceName));
             
             #line default
             #line hidden
             this.Write("\";\r\n    public byte ServiceId { get; private set; }\r\n    public INetRecipient Recipient { get; private set; }\r\n\r\n    void IServiceUnit.Bind(INetRecipient recipient, byte serviceId)\r\n    {\r\n        ServiceId = serviceId;\r\n        Recipient = recipient;\r\n    }\r\n");
             
-            #line 43 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 43 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
 
     }
 
@@ -104,7 +104,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("\r\n    public void HandleResponseAsync(byte actionIdx, OperationCode operationCode, short requestNumber, ref ReadOnlySpan<byte> data)\r\n    {\r\n        _handlers[actionIdx].Invoke(operationCode, requestNumber, ref data);\r\n    }\r\n\r\n    IEnumerable<ServiceActionDescription> IReceiverServiceUnit.Actions()\r\n    {\r\n");
             
-            #line 54 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 54 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
 
     if(Info.MethodInfos.Length == 0)
     {
@@ -114,7 +114,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        yield break;\r\n");
             
-            #line 59 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 59 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
 
     }
     else
@@ -133,21 +133,21 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        yield return new ServiceActionDescription(0x");
             
-            #line 72 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 72 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(action.CallAttributeInfo.CallId.ToString("X2")));
             
             #line default
             #line hidden
             this.Write(", ");
             
-            #line 72 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 72 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(handlerIdx++));
             
             #line default
             #line hidden
             this.Write(", true);\r\n");
             
-            #line 73 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 73 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
 
         }
 
@@ -159,7 +159,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        yield break;\r\n");
             
-            #line 80 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 80 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
 
         }
     }
@@ -169,14 +169,14 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("    }\r\n\r\n    public ");
             
-            #line 86 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 86 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Info.ServiceName));
             
             #line default
             #line hidden
             this.Write("Client()\r\n    {\r\n");
             
-            #line 88 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 88 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
 
     if(Info.MethodInfos.Length == 0 || Info.MethodInfos.All(info => info.IsRpc()))
     {
@@ -186,7 +186,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        _handlers = Array.Empty<RequestResponseDelegate>();\r\n");
             
-            #line 93 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 93 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
 
     }
     else
@@ -197,7 +197,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        _handlers = new RequestResponseDelegate[]\r\n        {\r\n");
             
-            #line 100 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 100 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
 
         for(var i = 0; i < Info.MethodInfos.Length; ++i)
         {
@@ -212,21 +212,21 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("            ");
             
-            #line 109 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 109 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(action.Name));
             
             #line default
             #line hidden
             this.Write("_Response0x");
             
-            #line 109 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 109 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(action.CallAttributeInfo.CallId.ToString("X2")));
             
             #line default
             #line hidden
             this.Write(",\r\n");
             
-            #line 110 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 110 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
 
         }
 
@@ -235,7 +235,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        };\r\n");
             
-            #line 114 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 114 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
 
     }
 
@@ -244,7 +244,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("    }\r\n");
             
-            #line 118 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 118 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
 
     var count = 0;
     foreach(MethodInfo mi in Info.MethodInfos)
@@ -269,133 +269,133 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("\r\n    private int ");
             
-            #line 138 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 138 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rnfn));
             
             #line default
             #line hidden
             this.Write(";\r\n\r\n    private ConcurrentDictionary<short, TaskCompletionSource<");
             
-            #line 140 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 140 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rmi.ReturnType));
             
             #line default
             #line hidden
             this.Write(">> _");
             
-            #line 140 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 140 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.CallAttributeInfo.CallId.ToString("X2")));
             
             #line default
             #line hidden
             this.Write("_tcs = new();\r\n\r\n    public Task<");
             
-            #line 142 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 142 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rmi.ReturnType));
             
             #line default
             #line hidden
             this.Write("> ");
             
-            #line 142 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 142 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rmi.Name));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 142 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 142 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rmi.RequestArguments.Inline(true)));
             
             #line default
             #line hidden
             this.Write(")\r\n    {\r\n        int __new_");
             
-            #line 144 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 144 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rnfn));
             
             #line default
             #line hidden
             this.Write(", __old_");
             
-            #line 144 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 144 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rnfn));
             
             #line default
             #line hidden
             this.Write(";\r\n        do\r\n        {\r\n            __old_");
             
-            #line 147 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 147 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rnfn));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 147 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 147 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rnfn));
             
             #line default
             #line hidden
             this.Write(";\r\n            __new_");
             
-            #line 148 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 148 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rnfn));
             
             #line default
             #line hidden
             this.Write(" = (__old_");
             
-            #line 148 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 148 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rnfn));
             
             #line default
             #line hidden
             this.Write(" + 1) & 0x7FFF;\r\n        }\r\n        while (Interlocked.CompareExchange(ref ");
             
-            #line 150 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 150 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rnfn));
             
             #line default
             #line hidden
             this.Write(", __new_");
             
-            #line 150 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 150 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rnfn));
             
             #line default
             #line hidden
             this.Write(", __old_");
             
-            #line 150 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 150 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rnfn));
             
             #line default
             #line hidden
             this.Write(") != __old_");
             
-            #line 150 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 150 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rnfn));
             
             #line default
             #line hidden
             this.Write(");\r\n\r\n        var __opCode = new OperationCode(ServiceId, 0x");
             
-            #line 152 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 152 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.CallAttributeInfo.CallId.ToString("X2")));
             
             #line default
             #line hidden
             this.Write(");\r\n        var __requestNumber = (short)__new_");
             
-            #line 153 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 153 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rnfn));
             
             #line default
             #line hidden
             this.Write(";\r\n        var __buffer = WriterBufferPool.Buffer;\r\n        \r\n        BinaryPrimitives.WriteUInt16LittleEndian(__buffer.GetSpan(sizeof(ushort)), __opCode.OpCode);\r\n\t\t__buffer.Advance(sizeof(ushort));\r\n\t\tBinaryPrimitives.WriteInt16LittleEndian(__buffer.GetSpan(sizeof(short)), __requestNumber);\r\n\t\t__buffer.Advance(sizeof(short));\r\n\r\n");
             
-            #line 161 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 161 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
 
         foreach(MethodArgumentInfo methodArgumentInfo in rmi.RequestArguments)
         {
@@ -405,14 +405,14 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        HandlerEngineSerializer.Serializer.Write(ref __buffer, ");
             
-            #line 165 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 165 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(methodArgumentInfo.Name));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 166 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 166 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
 
         }
 
@@ -421,49 +421,49 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        var __tcs = new TaskCompletionSource<");
             
-            #line 169 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 169 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rmi.ReturnType));
             
             #line default
             #line hidden
             this.Write(">();\r\n        _");
             
-            #line 170 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 170 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.CallAttributeInfo.CallId.ToString("X2")));
             
             #line default
             #line hidden
-            this.Write("_tcs[__requestNumber] = __tcs;\r\n\r\n        var __writtenSpan = __buffer.WrittenSpan;\r\n        Recipient!.Send(ref __writtenSpan, ");
+            this.Write("_tcs[__requestNumber] = __tcs;\r\n\r\n        Recipient!.Send(__buffer, ");
             
-            #line 173 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 172 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.CallAttributeInfo.ChannelType.InlineChanelType()));
             
             #line default
             #line hidden
             this.Write(",  ");
             
-            #line 173 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 172 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.CallAttributeInfo.ChannelId.ToString()));
             
             #line default
             #line hidden
-            this.Write(");\r\n\r\n        return __tcs.Task;\r\n    }\r\n\r\n    private void ");
+            this.Write(");\r\n \r\n        return __tcs.Task;\r\n    }\r\n\r\n    private void ");
             
-            #line 178 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 177 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rmi.Name));
             
             #line default
             #line hidden
             this.Write("_Response0x");
             
-            #line 178 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 177 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rmi.CallAttributeInfo.CallId.ToString("X2")));
             
             #line default
             #line hidden
             this.Write("(OperationCode __operationCode, short __requestNumber, ref ReadOnlySpan<byte> __data)\r\n    {\r\n");
             
-            #line 180 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 179 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
 
         foreach(MethodArgumentInfo mai in rmi.ResponseArguments)
         {
@@ -473,21 +473,21 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        var ");
             
-            #line 184 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 183 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mai.Name));
             
             #line default
             #line hidden
             this.Write(" = HandlerEngineSerializer.Deserializer.Read<");
             
-            #line 184 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 183 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mai.Type));
             
             #line default
             #line hidden
             this.Write(">(ref __data);\r\n");
             
-            #line 185 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 184 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
 
         }
         if(rmi.ReturnIsTuple)
@@ -498,14 +498,14 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        var __result = (");
             
-            #line 190 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 189 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rmi.ResponseArguments.Inline(false, false)));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 191 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 190 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
 
         }
 
@@ -514,14 +514,14 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        if(_");
             
-            #line 194 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 193 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(mi.CallAttributeInfo.CallId.ToString("X2")));
             
             #line default
             #line hidden
             this.Write("_tcs.Remove(__requestNumber, out var __tcs))\r\n        {\r\n");
             
-            #line 196 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 195 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
 
         if(rmi.ReturnIsTuple)
         {
@@ -531,7 +531,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("            __tcs.SetResult(__result);\r\n");
             
-            #line 201 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 200 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
 
         }
         else
@@ -542,14 +542,14 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("            __tcs.SetResult(");
             
-            #line 206 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 205 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rmi.ResponseArguments[0].Name));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 207 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 206 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
 
         }
 
@@ -558,14 +558,14 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("        }\r\n        else\r\n        {\r\n            throw new InvalidOperationException($\"Unknown request number: {{__requestNumber}} in ");
             
-            #line 213 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 212 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rmi.Name));
             
             #line default
             #line hidden
             this.Write("\");\r\n        }\r\n    }\r\n");
             
-            #line 216 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 215 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
 
     }
 
@@ -574,7 +574,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("}\r\n");
             
-            #line 220 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 219 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
 
     if(Info.HasNamespace)
     {
@@ -585,7 +585,7 @@ namespace HandlerEngine.SourceGenerator.Templates
             #line hidden
             this.Write("}\r\n");
             
-            #line 226 "E:\Projects\Unity\FrameProject\mmog\mmog_backend\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
+            #line 225 "E:\Projects\Unity\FrameProject\NetHandlerEngine\NetHandlerEngine\HandlerEngine.SourceGenerator\Templates\ServiceClientTemplate.tt"
 
     }
 
