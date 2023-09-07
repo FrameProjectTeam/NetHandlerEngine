@@ -1,0 +1,291 @@
+﻿<#@ template debug="false" hostspecific="false" linePragmas="false" language="C#" #>
+<#@ import namespace="HandlerEngine.SourceGenerator.CollectableData" #>
+<#@ import namespace="Microsoft.CodeAnalysis" #>
+using System;
+using System.Buffers.Binary;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+using HandlerEngine;
+using HandlerEngine.Interfaces;
+using HandlerEngine.Serialization;
+
+<#
+    if(Info.HasNamespace)
+    {
+#>
+namespace <#= Info.Namespace #>
+{
+<#
+        PushIndent("\t");
+    }
+#>
+public abstract class <#= Info.ServiceName #>Mediator : I<#= Info.ServiceName #>, INetworkService
+{
+    public string ServiceName => "<#= Info.ServiceName #>";
+    public byte ServiceId { get; private set; }
+    public INetRecipient Recipient { get; private set; }
+
+    public bool IsDisposed { get; private set; }
+
+    private readonly RequestResponseDelegateAsync[] _requestAsyncHandlers;
+    private readonly HandlerDelegateAsync[] _rpcAsyncHandlers;
+
+    protected <#= Info.ServiceName #>Mediator()
+    { 
+<#
+    MethodInfo[] requestMethods = Info.MethodInfos.Where(mi => !mi.IsRpc()).ToArray();
+
+    if(requestMethods.Length == 0)
+    {
+#>
+        _requestAsyncHandlers = Array.Empty<RequestResponseDelegateAsync>();
+        
+<#
+    }
+    else
+    {
+#>
+        _requestAsyncHandlers = new RequestResponseDelegateAsync[]
+        {
+<#
+        foreach(MethodInfo mi in requestMethods)
+        {
+#>
+            <#= mi.Name #>_0x<#= mi.CallAttributeInfo.CallId.ToString("X2") #>,
+<#
+        }
+#>
+        };
+<#
+    }
+    
+    MethodInfo[] rpcMethods = Info.MethodInfos.Where(mi => mi.IsRpc()).ToArray();
+    if(rpcMethods.Length == 0)
+    {
+#>
+
+        _rpcAsyncHandlers = Array.Empty<HandlerDelegateAsync>();
+<#
+    }
+    else
+    {
+#>
+
+        _rpcAsyncHandlers = new HandlerDelegateAsync[]
+        {
+<#
+        foreach(MethodInfo mi in rpcMethods)
+        {
+#>
+            <#= mi.Name #>_0x<#= mi.CallAttributeInfo.CallId.ToString("X2") #>,
+<#
+        }
+#>
+        };
+<#
+    }
+#>
+    }
+
+    void IServiceUnit.Bind(INetRecipient recipient, byte serviceId)
+    {
+        ServiceId = serviceId;
+        Recipient = recipient;
+        OnInitialize();
+    }
+    
+    protected virtual void OnInitialize() { }
+
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if(IsDisposed)
+        {
+            return;
+        }
+
+        if(disposing)
+        {
+            OnDispose();
+        }
+        OnDisposeUnmanaged();
+        IsDisposed = true;
+    }
+
+    protected virtual void OnDispose() { }
+
+    protected virtual void OnDisposeUnmanaged() { }
+
+    IEnumerable<ServiceActionDescription> IReceiverServiceUnit.Actions()
+    {
+<#
+    if(Info.MethodInfos.Length == 0)
+    {
+#>
+        yield break;
+<#
+    }
+    else
+    {
+        var rpcIdx = 0;
+        var requestIdx = 0;
+        for(var i = 0; i < Info.MethodInfos.Length; ++i)
+        {
+            MethodInfo action = Info.MethodInfos[i];
+#>
+        yield return new ServiceActionDescription(0x<#= action.CallAttributeInfo.CallId.ToString("X2") #>, <#= action.IsRpc() ? rpcIdx++ : requestIdx++ #>, <#= !action.IsRpc() ? "true" : "false" #>);
+<#
+        }
+    }
+#>
+    }
+
+    public Task HandleRpcAsync(byte actionIdx, OperationCode operationCode, ref ReadOnlySpan<byte> data)
+    {
+        return _rpcAsyncHandlers[actionIdx].Invoke(operationCode, ref data);
+    }
+
+    public Task HandleRequestAsync(byte actionIdx, OperationCode operationCode, short requestNumber, ref ReadOnlySpan<byte> data)
+    {
+        return _requestAsyncHandlers[actionIdx].Invoke(operationCode, requestNumber, ref data);
+    }
+
+<#
+    for(var i = 0; i < Info.MethodInfos.Length; ++i)
+    {
+        MethodInfo mi = Info.MethodInfos[i];
+        if(i > 0)
+        {
+            WriteLine(string.Empty);
+        }
+
+        bool isRpc = mi.IsRpc();
+        bool isVoid = mi.ReturnType.Equals("void");
+        bool isTask = mi.IsTask;
+#>
+    private Task <#= mi.Name #>_0x<#= mi.CallAttributeInfo.CallId.ToString("X2") #>(OperationCode __opCode, <#= isRpc ? string.Empty : "short __requestNumber, " #>ref ReadOnlySpan<byte> __data)
+    {
+<#
+        foreach(MethodArgumentInfo mai in mi.Parameters)
+        {
+            if(mai.Specifier == RefKind.Out)
+            {
+#>
+        <#= mai.Type #> <#= mai.Name #>;
+<#
+            }
+            else
+            {
+#>
+        var <#= mai.Name #> = HandlerEngineSerializer.Deserializer.Read<<#= mai.Type #>>(ref __data);
+<#
+            }
+        }
+
+        if(!isVoid && !isTask)
+        {
+#>
+        var __result = <#= mi.Name #>(<#= mi.Parameters.Inline(true, false) #>);     
+<#
+        }
+        else
+        {
+#>
+        <#= isTask ? "var __task = " : string.Empty #><#= mi.Name #>(<#= mi.Parameters.Inline(true, false) #>);  
+<#
+        }
+
+        if(isRpc)
+        {
+#>
+        return <#= mi.IsTask ? "__task" : "Task.CompletedTask" #>;
+<#
+        }
+        else
+        {
+            if(isTask)
+            {
+#>
+        return __task.ContinueWith(__completedTask => 
+        {
+<#
+                PushIndent("\t");
+            }
+#>
+        NetworkBufferWriter __buffer = WriterBufferPool.Buffer;
+                
+        BinaryPrimitives.WriteUInt16LittleEndian(__buffer.GetSpan(sizeof(ushort)), __opCode.OpCode);
+		__buffer.Advance(sizeof(ushort));
+        var __responseNumber = (short)(~__requestNumber + 1);
+        BinaryPrimitives.WriteInt16LittleEndian(__buffer.GetSpan(sizeof(short)), __responseNumber);
+		__buffer.Advance(sizeof(short));
+
+<#
+            if(!isVoid)
+            {
+#>
+        HandlerEngineSerializer.Serializer.Write(ref __buffer, <#= isTask ? "__completedTask.Result" : "__result" #>);
+<#
+            }
+
+            foreach(MethodArgumentInfo mai in mi.Parameters)
+            {
+                if(mai.Specifier == RefKind.Out)
+                {
+#>
+        HandlerEngineSerializer.Serializer.Write(ref __buffer, <#= mai.Name #>);
+<#
+                }
+            }
+#>
+        var __writtenSpan = __buffer.WrittenSpan;
+        Recipient!.Send(ref __writtenSpan, <#= mi.CallAttributeInfo.ChannelType.InlineChanelType() #>,  <#= mi.CallAttributeInfo.ChannelId.ToString() #>);
+<#
+            if(isTask)
+            {
+                PopIndent();
+#>
+        });
+<#
+            }
+            else
+            {
+#>
+        return Task.CompletedTask;
+<#
+            }
+        }
+#>
+    }
+
+<#
+        if(!isVoid && !isTask)
+        {
+#>
+    public abstract <#= mi.ReturnType #> <#= mi.Name #>(<#= mi.Parameters.Inline(true) #>);
+<#
+        }
+        else
+        {
+#>
+    public abstract <#= mi.IsTask ? "Task" : "void" #><#= isVoid ? string.Empty : $"<{mi.ReturnType}>" #> <#= mi.Name #>(<#= mi.Parameters.Inline(true) #>);
+<#
+        }
+    }
+#>
+}
+<#
+    if(Info.HasNamespace)
+    {
+        PopIndent();
+#>
+}
+<#
+    }
+#>

@@ -1,0 +1,228 @@
+﻿<#@ template debug="false" hostspecific="false" linePragmas="false" language="C#" #>
+<#@ import namespace="HandlerEngine.SourceGenerator.CollectableData" #>
+using System;
+using System.Buffers.Binary;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Threading;
+using System.Threading.Tasks;
+
+using HandlerEngine;
+using HandlerEngine.Interfaces;
+using HandlerEngine.Serialization;
+
+<#
+    if(Info.HasNamespace)
+    {
+#>
+namespace <#= Info.Namespace #>
+{
+<#
+        PushIndent("\t");
+    }
+
+    bool hasRpc = Info.HasRpc();
+#>
+public sealed class <#= Info.ServiceName #>Client : <#= hasRpc ? $"{Info.ServiceName}RpcClient, " : string.Empty #>I<#= Info.ServiceName #>Client
+{
+    private readonly RequestResponseDelegate[] _handlers;
+
+<#
+    if(!hasRpc)
+    {
+#>
+    public string ServiceName => "<#= Info.ServiceName #>";
+    public byte ServiceId { get; private set; }
+    public INetRecipient Recipient { get; private set; }
+
+    void IServiceUnit.Bind(INetRecipient recipient, byte serviceId)
+    {
+        ServiceId = serviceId;
+        Recipient = recipient;
+    }
+<#
+    }
+#>
+
+    public void HandleResponseAsync(byte actionIdx, OperationCode operationCode, short requestNumber, ref ReadOnlySpan<byte> data)
+    {
+        _handlers[actionIdx].Invoke(operationCode, requestNumber, ref data);
+    }
+
+    IEnumerable<ServiceActionDescription> IReceiverServiceUnit.Actions()
+    {
+<#
+    if(Info.MethodInfos.Length == 0)
+    {
+#>
+        yield break;
+<#
+    }
+    else
+    {
+        var handlerIdx = 0;
+        for(var i = 0; i < Info.MethodInfos.Length; ++i)
+        {
+            MethodInfo action = Info.MethodInfos[i];
+            if(action.IsRpc())
+            {
+                continue;
+            }
+#>
+        yield return new ServiceActionDescription(0x<#= action.CallAttributeInfo.CallId.ToString("X2") #>, <#= handlerIdx++ #>, true);
+<#
+        }
+
+        if(handlerIdx == 0)
+        {
+#>
+        yield break;
+<#
+        }
+    }
+#>
+    }
+
+    public <#= Info.ServiceName #>Client()
+    {
+<#
+    if(Info.MethodInfos.Length == 0 || Info.MethodInfos.All(info => info.IsRpc()))
+    {
+#>
+        _handlers = Array.Empty<RequestResponseDelegate>();
+<#
+    }
+    else
+    {
+#>
+        _handlers = new RequestResponseDelegate[]
+        {
+<#
+        for(var i = 0; i < Info.MethodInfos.Length; ++i)
+        {
+            MethodInfo action = Info.MethodInfos[i];
+            if(action.IsRpc())
+            {
+                continue;
+            }
+#>
+            <#= action.Name #>_Response0x<#= action.CallAttributeInfo.CallId.ToString("X2") #>,
+<#
+        }
+#>
+        };
+<#
+    }
+#>
+    }
+<#
+    var count = 0;
+    foreach(MethodInfo mi in Info.MethodInfos)
+    {
+        if(mi.IsRpc())
+        {
+            continue;
+        }
+
+        ResponseMethodInfo rmi = mi.ToResponse();
+
+        if(count++ > 1)
+        {
+            WriteLine(string.Empty);
+        }
+
+        //Request number field name
+        string rnfn = $"_{mi.CallAttributeInfo.CallId:X2}_rn";
+#>
+
+    private int <#= rnfn #>;
+
+    private ConcurrentDictionary<short, TaskCompletionSource<<#= rmi.ReturnType #>>> _<#= mi.CallAttributeInfo.CallId.ToString("X2") #>_tcs = new();
+
+    public Task<<#= rmi.ReturnType #>> <#= rmi.Name #>(<#= rmi.RequestArguments.Inline(true) #>)
+    {
+        int __new_<#= rnfn #>, __old_<#= rnfn #>;
+        do
+        {
+            __old_<#= rnfn #> = <#= rnfn #>;
+            __new_<#= rnfn #> = (__old_<#= rnfn #> + 1) & 0x7FFF;
+        }
+        while (Interlocked.CompareExchange(ref <#= rnfn #>, __new_<#= rnfn #>, __old_<#= rnfn #>) != __old_<#= rnfn #>);
+
+        var __opCode = new OperationCode(ServiceId, 0x<#= mi.CallAttributeInfo.CallId.ToString("X2") #>);
+        var __requestNumber = (short)__new_<#= rnfn #>;
+        var __buffer = WriterBufferPool.Buffer;
+        
+        BinaryPrimitives.WriteUInt16LittleEndian(__buffer.GetSpan(sizeof(ushort)), __opCode.OpCode);
+		__buffer.Advance(sizeof(ushort));
+		BinaryPrimitives.WriteInt16LittleEndian(__buffer.GetSpan(sizeof(short)), __requestNumber);
+		__buffer.Advance(sizeof(short));
+
+<#
+        foreach(MethodArgumentInfo methodArgumentInfo in rmi.RequestArguments)
+        {
+#>
+        HandlerEngineSerializer.Serializer.Write(ref __buffer, <#= methodArgumentInfo.Name #>);
+<#
+        }
+#>
+        var __tcs = new TaskCompletionSource<<#= rmi.ReturnType #>>();
+        _<#= mi.CallAttributeInfo.CallId.ToString("X2") #>_tcs[__requestNumber] = __tcs;
+
+        var __writtenSpan = __buffer.WrittenSpan;
+        Recipient!.Send(ref __writtenSpan, <#= mi.CallAttributeInfo.ChannelType.InlineChanelType() #>,  <#= mi.CallAttributeInfo.ChannelId.ToString() #>);
+
+        return __tcs.Task;
+    }
+
+    private void <#= rmi.Name #>_Response0x<#= rmi.CallAttributeInfo.CallId.ToString("X2") #>(OperationCode __operationCode, short __requestNumber, ref ReadOnlySpan<byte> __data)
+    {
+<#
+        foreach(MethodArgumentInfo mai in rmi.ResponseArguments)
+        {
+#>
+        var <#= mai.Name #> = HandlerEngineSerializer.Deserializer.Read<<#= mai.Type #>>(ref __data);
+<#
+        }
+        if(rmi.ReturnIsTuple)
+        {
+#>
+        var __result = (<#= rmi.ResponseArguments.Inline(false, false) #>);
+<#
+        }
+#>
+        if(_<#= mi.CallAttributeInfo.CallId.ToString("X2") #>_tcs.Remove(__requestNumber, out var __tcs))
+        {
+<#
+        if(rmi.ReturnIsTuple)
+        {
+#>
+            __tcs.SetResult(__result);
+<#
+        }
+        else
+        {
+#>
+            __tcs.SetResult(<#= rmi.ResponseArguments[0].Name #>);
+<#
+        }
+#>
+        }
+        else
+        {
+            throw new InvalidOperationException($"Unknown request number: {{__requestNumber}} in <#= rmi.Name #>");
+        }
+    }
+<#
+    }
+#>
+}
+<#
+    if(Info.HasNamespace)
+    {
+        PopIndent();
+#>
+}
+<#
+    }
+#>

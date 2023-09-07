@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "HandlerEngine.TestApp": {
+      "commandName": "Project"
+    },
+    "TestApp (Server)": {
+      "commandName": "Project",
+      "commandLineArgs": "--server"
+    }
+  }
+}

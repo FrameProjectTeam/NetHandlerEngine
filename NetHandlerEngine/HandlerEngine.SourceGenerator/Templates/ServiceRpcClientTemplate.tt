@@ -1,0 +1,82 @@
+﻿<#@ template debug="false" hostspecific="false" linePragmas="false" language="C#" #>
+<#@ import namespace="HandlerEngine.SourceGenerator.CollectableData" #>
+using System;
+using System.Buffers.Binary;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+using HandlerEngine;
+using HandlerEngine.Interfaces;
+using HandlerEngine.Serialization;
+
+<#
+    if(Info.HasNamespace)
+    {
+#>
+namespace <#= Info.Namespace #>
+{
+<#
+        PushIndent("\t");
+    }
+#>
+public abstract class <#= Info.ServiceName #>RpcClient : I<#= Info.ServiceName #>RpcClient
+{
+    public string ServiceName => "<#= Info.ServiceName #>";
+    public byte ServiceId { get; private set; }
+    public INetRecipient Recipient { get; private set; }
+
+    void IServiceUnit.Bind(INetRecipient recipient, byte serviceId)
+    {
+        Recipient = recipient;
+        ServiceId = serviceId;
+    }
+
+<#
+    var count = 0;
+    foreach(MethodInfo mi in Info.MethodInfos)
+    {
+        if(!mi.IsRpc())
+        {
+            continue;
+        }
+
+        if(count++ > 0)
+        {
+            WriteLine(string.Empty);
+        }
+#>
+    public <#= mi.ReturnType #> <#= mi.Name #>(<#= mi.Parameters.Inline(true) #>)
+    {
+        var __opCode = new OperationCode(ServiceId, 0x<#= mi.CallAttributeInfo.CallId.ToString("X2") #>);
+        NetworkBufferWriter __buffer = WriterBufferPool.Buffer;
+        
+        BinaryPrimitives.WriteUInt16LittleEndian(__buffer.GetSpan(sizeof(ushort)), __opCode.OpCode);
+		__buffer.Advance(sizeof(ushort));
+
+<#
+        foreach(MethodArgumentInfo pi in mi.Parameters)
+        {
+#>
+        HandlerEngineSerializer.Serializer.Write(ref __buffer, <#= pi.Name #>);
+<#
+        }
+#>
+        var __writtenSpan = __buffer.WrittenSpan;
+        Recipient!.Send(ref __writtenSpan, <#= mi.CallAttributeInfo.ChannelType.InlineChanelType() #>,  <#= mi.CallAttributeInfo.ChannelId.ToString() #>);
+    }
+<#
+    }
+#>
+}
+
+public sealed class <#= Info.ServiceName #>BroadcastClient : <#= Info.ServiceName #>RpcClient, IBroadcastServiceClient
+{ }
+<#
+    if(Info.HasNamespace)
+    {
+        PopIndent();
+#>
+}
+<#
+    }
+#>

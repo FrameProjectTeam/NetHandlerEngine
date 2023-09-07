@@ -1,0 +1,51 @@
+﻿<#@ template debug="false" hostspecific="false" linePragmas="false" language="C#" #>
+<#@ import namespace="HandlerEngine.SourceGenerator.CollectableData" #>
+using System;
+using System.Threading.Tasks;
+
+using HandlerEngine;
+using HandlerEngine.Interfaces;
+
+<#
+    if(Info.HasNamespace)
+    {
+#>
+namespace <#= Info.Namespace #>
+{
+<#
+        PushIndent("\t");
+    }
+#>
+public interface I<#= Info.ServiceName #>Client : IServiceClient<#= Info.HasRpc() ? $", I{Info.ServiceName}RpcClient" : string.Empty #>
+{
+<#
+    var count = 0;
+    foreach(MethodInfo mi in Info.MethodInfos)
+    {
+        if(mi.IsRpc())
+        {
+            continue;
+        }
+
+        //INFO: Insert a blank line between methods
+        if(count++ > 1)
+        {
+            WriteLine(string.Empty);
+        }
+
+        ResponseMethodInfo rmi = mi.ToResponse();
+#>
+    Task<<#= rmi.ReturnType #>> <#= rmi.Name #>(<#= rmi.RequestArguments.Inline(true) #>);
+<#
+    }
+#>
+}
+<#
+    if(Info.HasNamespace)
+    {
+        PopIndent();
+#>
+}
+<#
+    }
+#>

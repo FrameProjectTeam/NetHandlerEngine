@@ -1,0 +1,82 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <IsPackable>false</IsPackable>
+        <Nullable>enable</Nullable>
+        <LangVersion>11</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <AnalyzerLanguage>cs</AnalyzerLanguage>
+
+        <EnforceExtendedAnalyzerRules>false</EnforceExtendedAnalyzerRules>
+        <IsRoslynComponent>true</IsRoslynComponent>
+
+        <MicrosoftCodeAnalysisVersion>3.8.0</MicrosoftCodeAnalysisVersion>
+
+        <RootNamespace>HandlerEngine.SourceGenerator</RootNamespace>
+        <PackageId>HandlerEngine.SourceGenerator</PackageId>
+        <Configurations>Debug;Release</Configurations>
+        <Platforms>AnyCPU</Platforms>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <CopyReleaseToUnity>true</CopyReleaseToUnity>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="JetBrains.Annotations" Version="2023.2.0" PrivateAssets="all"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.1.0" PrivateAssets="all"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.1.0" PrivateAssets="all"/>
+        <PackageReference Include="System.CodeDom" Version="6.0.0" PrivateAssets="all"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="Templates\ServiceRpcClientTemplate.cs">
+            <AutoGen>True</AutoGen>
+            <DesignTime>True</DesignTime>
+            <DependentUpon>ServiceRpcClientTemplate.tt</DependentUpon>
+        </Compile>
+        <Compile Update="Templates\ServiceRpcClientInterfaceTemplate.cs">
+            <AutoGen>True</AutoGen>
+            <DesignTime>True</DesignTime>
+            <DependentUpon>ServiceRpcClientInterfaceTemplate.tt</DependentUpon>
+        </Compile>
+        <Compile Update="Templates\ServiceClientInterfaceTemplate.cs">
+            <AutoGen>True</AutoGen>
+            <DesignTime>True</DesignTime>
+            <DependentUpon>ServiceClientInterfaceTemplate.tt</DependentUpon>
+        </Compile>
+        <Compile Update="Templates\ServiceClientTemplate.cs">
+            <AutoGen>True</AutoGen>
+            <DesignTime>True</DesignTime>
+            <DependentUpon>ServiceClientTemplate.tt</DependentUpon>
+        </Compile>
+        <Compile Update="Templates\ServiceMediatorTemplate.cs">
+            <AutoGen>True</AutoGen>
+            <DesignTime>True</DesignTime>
+            <DependentUpon>ServiceMediatorTemplate.tt</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Update="Templates\ServiceRpcClientInterfaceTemplate.tt">
+            <Generator>TextTemplatingFilePreprocessor</Generator>
+            <LastGenOutput>ServiceRpcClientInterfaceTemplate.cs</LastGenOutput>
+        </None>
+        <None Update="Templates\ServiceClientInterfaceTemplate.tt">
+            <Generator>TextTemplatingFilePreprocessor</Generator>
+            <LastGenOutput>ServiceClientInterfaceTemplate.cs</LastGenOutput>
+        </None>
+        <None Update="Templates\ServiceRpcClientTemplate.tt">
+            <Generator>TextTemplatingFilePreprocessor</Generator>
+            <LastGenOutput>ServiceRpcClientTemplate.cs</LastGenOutput>
+        </None>
+        <None Update="Templates\ServiceClientTemplate.tt">
+            <Generator>TextTemplatingFilePreprocessor</Generator>
+            <LastGenOutput>ServiceClientTemplate.cs</LastGenOutput>
+        </None>
+        <None Update="Templates\ServiceMediatorTemplate.tt">
+            <Generator>TextTemplatingFilePreprocessor</Generator>
+            <LastGenOutput>ServiceMediatorTemplate.cs</LastGenOutput>
+        </None>
+    </ItemGroup>
+</Project>
