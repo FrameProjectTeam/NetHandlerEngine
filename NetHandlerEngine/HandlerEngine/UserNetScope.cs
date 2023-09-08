@@ -59,7 +59,7 @@ namespace HandlerEngine
 				return Task.CompletedTask;
 			}
 
-			if(!record.IsRequestResponse)
+			if(record.Flags.IsRpc())
 			{
 				handleResult = HandleResult.Procedure | HandleResult.Success;
 				return record.Service.HandleRpcAsync(record.ServiceActionIdx, operationCode, ref data);
@@ -115,41 +115,24 @@ namespace HandlerEngine
 			return _userGroups.Remove(group);
 		}
 
-		public void RegisterServiceHandler(OperationCode operationCode, INetworkService serviceRecord, byte actionIdx, bool isRequest)
+		public void RegisterServiceHandler(OperationCode operationCode, INetworkService service, byte actionIdx, bool isRequest)
 		{
 			if(IsDisposed)
 			{
 				throw new ObjectDisposedException(nameof(UserNetScope));
 			}
 
-			if(operationCode.ServiceId != serviceRecord.ServiceId)
-			{
-				throw new InvalidOperationException("Operation code service id is not equal to service service id.");
-			}
-
 			if(!_handlers.TryGetValue(operationCode, out ServiceRecord record))
 			{
-				_handlers.Add(
-					operationCode, new ServiceRecord
-					{
-						Service = serviceRecord,
-						ServiceId = serviceRecord.ServiceId,
-						ServiceActionIdx = actionIdx,
-						IsRequestResponse = isRequest
-					}
-				);
+				var nr = new ServiceRecord(service.ServiceId, isRequest ? RecordFlags.AsyncRequest : RecordFlags.AsyncProcedure);
+				nr.SetService(service, actionIdx);
+				_handlers.Add(operationCode, nr);
 			}
 			else
 			{
 				if(record.Service == null)
 				{
-					if(record.ServiceId != serviceRecord.ServiceId)
-					{
-						throw new InvalidOperationException($"Service handler already registered for {operationCode} with different service id.");
-					}
-
-					record.Service = serviceRecord;
-					record.ServiceActionIdx = actionIdx;
+					record.SetService(service, actionIdx);
 				}
 				else
 				{
@@ -179,8 +162,7 @@ namespace HandlerEngine
 
 			serviceRecord = record.Service;
 
-			record.Service = null;
-			record.ServiceActionIdx = 0;
+			record.SetService(null, 0);
 
 			if(record.Client == null)
 			{
@@ -197,40 +179,23 @@ namespace HandlerEngine
 				throw new ObjectDisposedException(nameof(UserNetScope));
 			}
 
-			if(operationCode.ServiceId != clientService.ServiceId)
-			{
-				throw new InvalidOperationException("Operation code service id is not equal to client service id.");
-			}
-
 			if(!_handlers.TryGetValue(operationCode, out ServiceRecord record))
 			{
-				_handlers.Add(
-					operationCode, new ServiceRecord
-					{
-						Client = clientService,
-						ServiceId = clientService.ServiceId,
-						ClientActionIdx = actionIdx,
-						//This is true because client is always handle response only
-						IsRequestResponse = true
-					}
-				);
+				var nr = new ServiceRecord(operationCode.ServiceId, RecordFlags.AsyncRequest);
+				nr.SetClient(clientService, actionIdx);
+				
+				_handlers.Add(operationCode, nr);
 			}
 			else
 			{
 				if(record.Client == null)
 				{
-					if(record.ServiceId != clientService.ServiceId)
-					{
-						throw new InvalidOperationException($"Client handler already registered for {operationCode} with different service id.");
-					}
-
-					if(record.IsRequestResponse != true)
+					if(!record.Flags.IsRequest())
 					{
 						throw new InvalidOperationException("Service handler already registered for non request response operation code.");
 					}
 
-					record.Client = clientService;
-					record.ClientActionIdx = actionIdx;
+					record.SetClient(clientService, actionIdx);
 				}
 				else
 				{
@@ -260,8 +225,7 @@ namespace HandlerEngine
 
 			serviceRecord = record.Client;
 
-			record.Client = null;
-			record.ClientActionIdx = 0;
+			record.SetClient(null, 0);
 
 			if(record.Service == null)
 			{

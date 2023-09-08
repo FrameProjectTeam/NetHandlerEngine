@@ -82,20 +82,14 @@ public static class Program
 	{
 		var listener = new EventBasedNetListener();
 		var server = new NetManager(listener);
-		server.Start(9050 /* port */);
+		server.Start(9050);
 
 		var networkEngine = new NetworkEngine();
-		
+		EchoServiceClient? echoService = null;
+
 		listener.ConnectionRequestEvent += request =>
 		{
-			if(server.ConnectedPeersCount < 10 /* max connections */)
-			{
-				request.AcceptIfKey("SomeConnectionKey");
-			}
-			else
-			{
-				request.Reject();
-			}
+			request.AcceptIfKey("SomeConnectionKey");
 		};
 
 		listener.PeerConnectedEvent += peer =>
@@ -103,7 +97,7 @@ public static class Program
 			var hPeer = new HUser(peer);
 			IUserNetScope scope = networkEngine.CreateScope(hPeer);
 			peer.Tag = scope;
-			
+			echoService = networkEngine.CreateClient<EchoServiceClient>(hPeer, 5);
 			networkEngine.CreateService<EchoService>(hPeer, 5);
 		};
 
@@ -127,6 +121,9 @@ public static class Program
 		
 		while(!Console.KeyAvailable)
 		{
+			echoService?.EchoString("Echo from server.")
+					   .ContinueWith(task => Log.Info("Echo response: " + task.Result));
+
 			server.PollEvents();
 			Thread.Sleep(15);
 		}
@@ -138,11 +135,11 @@ public static class Program
 	{
 		var listener = new EventBasedNetListener();
 		var client = new NetManager(listener);
-		var networkEngine = new NetworkEngine();
 		
 		client.Start();
-		NetPeer? serverPeer = client.Connect("localhost" /* host ip or name */, 9050 /* port */, "SomeConnectionKey" /* text key or NetDataWriter */);
+		NetPeer? serverPeer = client.Connect("localhost", 9050, "SomeConnectionKey");
 
+		var networkEngine = new NetworkEngine();
 		EchoServiceClient? echoService = null;
 		
 		listener.NetworkReceiveEvent += (fromPeer, reader, channel, deliveryMethod) =>
@@ -153,21 +150,21 @@ public static class Program
 			if(result.IsFailure())
 			{
 				Log.Error($"Handle failure [{result:F}].");
-				
 			}
 			reader.Recycle();
 		};
 
 		listener.PeerConnectedEvent += netPeer =>
 		{
-			var hNetPeer = new HUser(netPeer);
-			serverPeer.Tag = networkEngine.CreateScope(hNetPeer);
-			echoService = networkEngine.CreateClient<EchoServiceClient>(hNetPeer, 5);
+			var hPeer = new HUser(netPeer);
+			serverPeer.Tag = networkEngine.CreateScope(hPeer);
+			echoService = networkEngine.CreateClient<EchoServiceClient>(hPeer, 5);
+			networkEngine.CreateService<EchoService>(hPeer, 5);
         };
 		
 		while(!Console.KeyAvailable)
 		{
-			echoService?.EchoString("Some string echo.")
+			echoService?.EchoString("Echo from client.")
 					   .ContinueWith(task => Log.Info("Echo response: " + task.Result));
 			
 			client.PollEvents();
