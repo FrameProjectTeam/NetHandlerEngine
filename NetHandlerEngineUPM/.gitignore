@@ -1,0 +1,94 @@
+# =============== #
+# Unity generated #
+# =============== #
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild
+/[Bb]uilds/
+/[Ll]ibrary/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/Assets/AssetStoreTools*
+/Assets/StreamingAssets/build_info
+*.apk
+*.unitypackage
+*.unitypackage.meta
+*.stackdump 
+sysinfo.txt
+
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+[Ee]xported[Oo]bj/
+.vs/
+/*.userprefs
+/*.csproj
+/*.pidb
+*.pidb.meta
+/*.suo
+/*.sln*
+/*.user
+/*.unityproj
+/*.booproj
+.consulo/
+/*.tmp
+/*.svd
+/.idea/ 
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store*
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+[Tt]humbs.db
+[Dd]esktop.ini
+Corridor/Library/ShaderCache/
+Corridor/Library/metadata/
+Assets/Horizon Based Ambient Occlusion/Documentation/User Guide.pdf
+
+# our saves
+/[Ss]aves
+/[Ss]ave
+
+# ================================= #
+# Common IntelliJ Platform excludes
+# ================================= #
+# User specific
+**/.idea/**/workspace.xml
+**/.idea/**/tasks.xml
+**/.idea/shelf/*
+**/.idea/dictionaries
+
+# Sensitive or high-churn files
+**/.idea/**/dataSources/
+**/.idea/**/dataSources.ids
+**/.idea/**/dataSources.xml
+**/.idea/**/dataSources.local.xml
+**/.idea/**/sqlDataSources.xml
+**/.idea/**/dynamic.xml
+
+# Rider
+# Rider auto-generates .iml files, and contentModel.xml
+**/.idea/**/*.iml
+**/.idea/**/contentModel.xml
+**/.idea/**/modules.xml
+
+# ReSharper is a .NET coding add-in
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+*.DotSettings
+!/SharedSettings/*.DotSettings
+
+#personal plugins
+.vscode/*
+PropertyInspector
+AkWwiseProjectData.asset
+AkWwiseProjectData.asset.meta
+WwiseProfilingSession.prof
+WwiseProfilingSession.prof.meta
+
+# Switch generated
+/SwitchIL2CPPCache

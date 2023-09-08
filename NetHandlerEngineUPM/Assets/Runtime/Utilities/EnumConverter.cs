@@ -1,5 +1,8 @@
 ﻿using System;
+
+#if NET5_0_OR_GREATER || HE_ENABLE_UNSAFE
 using System.Runtime.CompilerServices;
+#endif
 
 namespace HandlerEngine.Utilities
 {
@@ -18,19 +21,32 @@ namespace HandlerEngine.Utilities
 			}
 		}
 
+
 		public static TUnderlying To(TEnum enumValue)
 		{
+#if NET5_0_OR_GREATER || HE_ENABLE_UNSAFE
 			return Unsafe.As<TEnum, TUnderlying>(ref enumValue);
+#else
+			return (TUnderlying)(object)enumValue;
+#endif
 		}
 
 		public static TUnderlying To(ref TEnum enumValue)
 		{
+#if NET5_0_OR_GREATER || HE_ENABLE_UNSAFE
 			return Unsafe.As<TEnum, TUnderlying>(ref enumValue);
+#else
+			return (TUnderlying)(object)enumValue;
+#endif
 		}
 
 		public static TEnum From(TUnderlying underlyingValue)
 		{
+#if NET5_0_OR_GREATER || HE_ENABLE_UNSAFE
 			return Unsafe.As<TUnderlying, TEnum>(ref underlyingValue);
+#else
+			return (TEnum)(object)underlyingValue;
+#endif
 		}
 	}
 }

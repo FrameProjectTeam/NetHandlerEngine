@@ -1,6 +1,9 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+
+#if NET5_0_OR_GREATER || HE_ENABLE_UNSAFE
+using System.Runtime.CompilerServices;
+#endif
 
 namespace HandlerEngine
 {
@@ -18,14 +21,23 @@ namespace HandlerEngine
 
 		public OperationCode(ushort opCode)
 		{
+#if NET5_0_OR_GREATER || HE_ENABLE_UNSAFE
 			Unsafe.SkipInit(out ServiceId);
 			Unsafe.SkipInit(out PackageId);
+#else
+			ServiceId = 0;
+			PackageId = 0;
+#endif
 			OpCode = opCode;
 		}
 
 		public OperationCode(byte serviceId, byte packageId)
 		{
+#if NET5_0_OR_GREATER || HE_ENABLE_UNSAFE
 			Unsafe.SkipInit(out OpCode);
+#else
+			OpCode = 0;
+#endif
 			ServiceId = serviceId;
 			PackageId = packageId;
 		}

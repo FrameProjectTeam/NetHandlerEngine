@@ -79,4 +79,8 @@
             <LastGenOutput>ServiceMediatorTemplate.cs</LastGenOutput>
         </None>
     </ItemGroup>
+
+    <Target Name="CopyToUnityProject" AfterTargets="PostBuildEvent">
+        <Exec Command="xcopy /y &quot;$(TargetDir)$(TargetFileName)&quot; &quot;$(SolutionDir)..\NetHandlerEngineUPM\Assets\Runtime\Plugins&quot;"/>
+    </Target>
 </Project>

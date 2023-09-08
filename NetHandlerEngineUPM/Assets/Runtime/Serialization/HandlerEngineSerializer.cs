@@ -21,5 +21,17 @@ namespace HandlerEngine.Serialization
 			
 			Initialized = true;
 		}
+
+#if UNITY_EDITOR
+		
+		[UnityEngine.RuntimeInitializeOnLoadMethod]
+		private static void OnLoadReset()
+		{
+			Initialized = false;
+			Serializer = null;
+			Deserializer = null;
+		}
+		
+#endif
 	}
 }
