@@ -24,7 +24,7 @@ namespace HandlerEngine.Serialization
 
 #if UNITY_EDITOR
 		
-		[UnityEngine.RuntimeInitializeOnLoadMethod]
+		[UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.SubsystemRegistration)]
 		private static void OnLoadReset()
 		{
 			Initialized = false;
